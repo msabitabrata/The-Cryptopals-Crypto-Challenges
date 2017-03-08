@@ -29,7 +29,7 @@ struct hex_bin dict[16] =
 	{'c',"1100"},{'d',"1101"},{'e',"1110"},{'f',"1111"}
 };
 
-struct common_words comm_words[14] = {{"a"},{"an"},{"the"},{"this"},{"that"},{"is"},{"are"},{"was"},{"were"},{"by"},{"of"},{"at"},{"like"},{"for"}};
+struct common_words comm_words[14] = {{"an"},{"the"},{"this"},{"that"},{"is"},{"are"},{"was"},{"were"},{"by"},{"of"},{"at"},{"like"},{"for"},{"and"}};
 
 int main()
 {
