@@ -29,15 +29,39 @@ struct hex_bin dict[16] =
 	{'c',"1100"},{'d',"1101"},{'e',"1110"},{'f',"1111"}
 };
 
-struct common_words comm_words[14] = {{"a"},{"an"},{"the"},{"this"},{"that"},{"is"},{"are"},{"was"},{"were"},{"by"},{"of"},{"at"},{"like"},{"for"}};
+struct common_words comm_words[14] = {{"an"},{"the"},{"this"},{"that"},{"is"},{"are"},{"was"},{"were"},{"by"},{"of"},{"at"},{"like"},{"and"},{"for"}};
 
 int main()
 {
-	char *hexString = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";	
+	char *hexString = (char *)malloc(sizeof(char)*60);	
 	char *strKey = (char *)malloc(sizeof(char)*8);
 	char *asciiString = (char *)malloc(sizeof(char)*strlen(hexString)/2);
-	decryptXorString(hexString, asciiString, strKey);
-	printf("Decrypted string : %s\nKey : %s\n",asciiString,convertBinaryToHex(strKey));
+	FILE *fp;
+	char ch,*p=hexString;
+	fp = fopen("4.txt", "r");
+	if(fp)
+	{
+		while ((ch = getc(fp)) != EOF)
+		{
+			if(ch!='\n')
+			{
+				*p++=ch;
+			}
+			else
+			{
+				*p='\0';
+				decryptXorString(hexString, asciiString, strKey);
+				if(asciiString[0]!='\0')
+				{
+					printf("Encrypted string : %s\nDecrypted string : %s\nKey : %s\n",hexString,asciiString,convertBinaryToHex(strKey));
+				}
+				memset(hexString,'\0',strlen(hexString));
+				memset(asciiString,'\0',strlen(asciiString));
+				memset(strKey,'\0',strlen(strKey));
+				p=&hexString[0];
+			}
+		}
+	}
 }
 
 char *decryptXorString(char *hexString, char *asciiString, char *strKey)
@@ -71,7 +95,7 @@ char *decryptXorString(char *hexString, char *asciiString, char *strKey)
 						*q='\0';
 						word[0] = tolower(word[0]);
 						int l=0;
-						match=0
+						match=0;
 						for(l=0;l<14;l++)
 						{
 							if(strcmp(comm_words[l].words,word)==0)
